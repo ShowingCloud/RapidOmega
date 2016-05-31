@@ -21,3 +21,5 @@
 .byebug_history
 
 /config/wechat.yml
+/config/wechat_menu.yml
+menu.yaml

@@ -7,7 +7,7 @@ class WechatsController < ApplicationController
   end
 
   on :event, with: 'subscribe' do |request|
-    request.reply.text "哈喽！" #Say hello
+    request.reply.text "哈喽！#{request[:FromUserName]}" #Say hello
   end
 
   on :event, with: 'unsubscribe' do |request|
