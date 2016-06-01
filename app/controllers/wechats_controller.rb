@@ -13,4 +13,5 @@ class WechatsController < ApplicationController
   on :event, with: 'unsubscribe' do |request|
     request.reply.success # user can not receive this message
   end
+
 end

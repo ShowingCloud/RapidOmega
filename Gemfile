@@ -14,6 +14,10 @@ gem 'uglifier', '>= 1.3.0'
 #wechat sdk https://github.com/Eric-Guo/wechat
 gem 'wechat'
 
+gem "omniauth"
+
+gem "omniauth-wechat-oauth2"
+
 gem 'devise'
 
 # Use CoffeeScript for .coffee assets and views
