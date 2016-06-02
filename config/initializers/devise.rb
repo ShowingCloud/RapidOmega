@@ -1,5 +1,7 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
+#WECHAT_CONFIG = YAML.load_file("#{Rails.root.to_s}/config/wechat.yml")[Rails.env]
+WECHAT_CONFIG=Rails.application.config_for(:wechat)
 Devise.setup do |config|
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
@@ -265,7 +267,7 @@ Devise.setup do |config|
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
-  config.omniauth :wechat, ENV["WECHAT_APP_ID"], ENV["WECHAT_APP_SECRET"]
+  config.omniauth :wechat, WECHAT_CONFIG["appid"], WECHAT_CONFIG["secret"]
 
     config.warden do |manager|
       manager.failure_app = DeviseFailure

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'account/index'
+  get 'account/get_temp_qr',to:"account#get_temp_qr"
+
   get 'secret/index'
 
   devise_for :users, controllers: {

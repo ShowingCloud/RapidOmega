@@ -14,4 +14,12 @@ class WechatsController < ApplicationController
     request.reply.success # user can not receive this message
   end
 
+  on :scan, with: 'qrscene_xxxxxx' do |request, ticket|
+    request.reply.text "Unsubscribe user #{request[:FromUserName]} Ticket #{ticket}"
+  end
+
+  # When subscribe user scan scene_id in public account
+  on :scan, with: 'scene_id' do |request, ticket|
+    request.reply.text "Subscribe user #{request[:FromUserName]} Ticket #{ticket}"
+  end
 end
