@@ -1,2 +1,8 @@
-<h1>Account#index</h1>
-<%= image_tag(@qrcode_url)  %>
+<div>
+  <% if current_user.uid %>
+    微信已绑定<%= link_to '解绑', unbind_wechat_path %>
+  <% else %>
+    <p>打开微信扫一扫，扫描下方二维码</p>
+    <%= image_tag(@qrcode_url)  %>
+  <% end %>
+</div>

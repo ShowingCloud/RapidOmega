@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  get 'account/index'
+  get 'account/index' ,as: 'account'
+  get 'account/unbind_wechat' ,as: 'unbind_wechat'
   get 'account/get_temp_qr',to:"account#get_temp_qr"
 
   get 'secret/index'
