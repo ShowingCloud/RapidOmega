@@ -6,16 +6,21 @@ class WechatsController < ApplicationController
     request.reply.text "echo: #{content}" # Just echo
   end
 
-  # on :event, with: 'subscribe' do |request|
-  #   request.reply.text "哈喽！#{request[:FromUserName]}" #Say hello
-  # end
-
   #unsubscribe user scan and subscribe
   on :event, with: "subscribe" do |request, content|
     if request[:EventKey].present? && request[:EventKey].start_with?("qrscene")
        @key = request[:EventKey].split("_").last
-       bind_wechat
-       #process the scan event.
+       if @user_id=Rails.cache.read(@key)
+          @user=User.find(@user_id)
+          unless @user.uid
+              @info=wechat.user request[:FromUserName]
+              @user.update(provider:"wechat",uid:request[:FromUserName],nickname:@info["nickname"])
+              template={"template_id"=>"veJ3fZdBX5QqhjVLlvI-vXkRyW08slisYusPA8J2pm0", "url"=>"https://weixin-bikeman18.c9users.io/account/index", "topcolor"=>"#FF0000", "data"=>{"email"=>{"value"=>@user.email, "color"=>"#0A0A0A"}}}
+              wechat.template_message_send Wechat::Message.to(request[:FromUserName]).template(template)
+          end
+       end
+    else
+      request.reply.text "哈喽！Robodou欢迎你～"
     end
   end
 
@@ -26,10 +31,13 @@ class WechatsController < ApplicationController
   on :event, with: "scan" do |request, content|
   if request[:EventKey].present?
     @key =  request[:EventKey]
-    bind_wechat
+    if @user_id=Rails.cache.read(@key)
+       @user=User.find(@user_id)
+       @user.update(provider:"wechat",uid:request[:FromUserName]) unless @user.uid
+    end
     #process the subscribe event
   end
-  request.reply.text @key+"aaa"
+  request.reply.text @user.email
 end
 
   # When user click the menu button
@@ -38,7 +46,7 @@ end
   end
 
   # When user view URL in the menu button
-  on :view, with: '"http://nop7hhge4p.proxy.qqbrowser.cc:8000/secret/index.html"' do |request, view|
+  on :view, with: "https://weixin-bikeman18.c9users.io/secret/index.html" do |request, view|
     request.reply.text "#{request[:FromUserName]} view #{view}"
   end
 
@@ -97,15 +105,7 @@ end
 
   private
   def bind_wechat
-    if @user_id=Rails.cache.read(@key)
-       @user=User.find(@user_id)
-       if @user.uid
-           request.reply.text "哈喽！欢迎回来～"
-         else
-           @user.update(provider:"wechat",uid:request[:FromUserName])
-           request.reply.text "账户已绑定"+@user.email
-       end
-    end
+
   end
 
 end

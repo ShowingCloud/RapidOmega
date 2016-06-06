@@ -8,10 +8,10 @@ class AccountController < ApplicationController
     @qrcode_url = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket="+@ticket["ticket"]
   end
 
-  def unbind
+  def unbind_wechat
     @user=User.find(current_user.id)
-    @user.update(provider:nil,uid:nil)
-    render json:{success:1,msg:"微信已解绑"}
+    @user.update(provider:nil,uid:nil,nickname:nil)
+    redirect_to :back
   end
 
 end
