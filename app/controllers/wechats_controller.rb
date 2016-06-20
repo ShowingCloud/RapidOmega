@@ -7,38 +7,43 @@ class WechatsController < ApplicationController
   end
 
   #unsubscribe user scan and subscribe
-  on :event, with: "subscribe" do |request, content|
-    if request[:EventKey].present? && request[:EventKey].start_with?("qrscene")
-       @key = request[:EventKey].split("_").last
-       if @user_id=Rails.cache.read(@key)
-          @user=User.find(@user_id)
-          unless @user.uid
-              @info=wechat.user request[:FromUserName]
-              @user.update(provider:"wechat",uid:request[:FromUserName],nickname:@info["nickname"])
-              template={"template_id"=>"veJ3fZdBX5QqhjVLlvI-vXkRyW08slisYusPA8J2pm0", "url"=>"https://weixin-bikeman18.c9users.io/account/index", "topcolor"=>"#FF0000", "data"=>{"email"=>{"value"=>@user.email, "color"=>"#0A0A0A"}}}
-              wechat.template_message_send Wechat::Message.to(request[:FromUserName]).template(template)
-          end
-       end
-    else
-      request.reply.text "哈喽！Robodou欢迎你～"
-    end
-  end
+  # on :event, with: "subscribe" do |request, content|
+  #   if request[:EventKey].present? && request[:EventKey].start_with?("qrscene")
+  #     @key = request[:EventKey].split("_").last
+  #     if @user_id=Rails.cache.read(@key)
+  #         @user=User.find(@user_id)
+  #         unless @user.uid
+  #             @info=wechat.user request[:FromUserName]
+  #             @user.update(provider:"wechat",uid:request[:FromUserName],nickname:@info["nickname"])
+  #             template={"template_id"=>"veJ3fZdBX5QqhjVLlvI-vXkRyW08slisYusPA8J2pm0", "url"=>"https://weixin-bikeman18.c9users.io/account/index", "topcolor"=>"#FF0000", "data"=>{"email"=>{"value"=>@user.email, "color"=>"#0A0A0A"}}}
+  #             wechat.template_message_send Wechat::Message.to(request[:FromUserName]).template(template)
+  #         end
+  #     end
+  #   else
+  #     request.reply.text "哈喽！Robodou欢迎你～"
+  #   end
+  # end
 
   on :event, with: 'unsubscribe' do |request|
     request.reply.success # user can not receive this message
   end
-
-  on :event, with: "scan" do |request, content|
-  if request[:EventKey].present?
-    @key =  request[:EventKey]
-    if @user_id=Rails.cache.read(@key)
-       @user=User.find(@user_id)
-       @user.update(provider:"wechat",uid:request[:FromUserName]) unless @user.uid
-    end
-    #process the subscribe event
+  
+  on :event, with: 'subscribe' do |request|
+    welcome = YAML.load(File.read(Rails.root.join('welcome.yml')))
+    wechat.custom_message_send Wechat::Message.to(request[:FromUserName]).news(welcome['articles'])
   end
-  request.reply.text @user.email
-end
+
+#   on :event, with: "scan" do |request, content|
+#   if request[:EventKey].present?
+#     @key =  request[:EventKey]
+#     if @user_id=Rails.cache.read(@key)
+#       @user=User.find(@user_id)
+#       @user.update(provider:"wechat",uid:request[:FromUserName]) unless @user.uid
+#     end
+    
+#   end
+#   request.reply.text @user.email
+# end
 
   # When user click the menu button
   on :click, with: 'baoming' do |request, key|
