@@ -22,5 +22,5 @@
 
 /config/wechat.yml
 /config/wechat_menu.yml
-menu.yaml
-welcome.yml
+
+**/.DS_Store

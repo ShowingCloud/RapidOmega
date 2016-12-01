@@ -1,8 +1,0 @@
-<div>
-  <% if current_user.uid %>
-    已绑定微信:<%= current_user.nickname %><%= link_to '解绑', unbind_wechat_path %>
-  <% else %>
-    <p>打开微信扫一扫，扫描下方二维码</p>
-    <%= image_tag(@qrcode_url)  %>
-  <% end %>
-</div>
