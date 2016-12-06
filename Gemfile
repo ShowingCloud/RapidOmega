@@ -20,10 +20,11 @@ gem 'sucker_punch', '~> 2.0'
 gem 'jquery-rails'
 
 gem 'bootstrap-sass'
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5.x'
+
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
+
+gem 'font-awesome-sass', '~> 4.7.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

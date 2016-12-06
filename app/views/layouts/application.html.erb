@@ -1,14 +1,77 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Robodou</title>
+    <title>豆姆微信平台</title>
     <%= csrf_meta_tags %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'application', media: 'all'%>
+    <%= javascript_include_tag 'application' %>
   </head>
 
-  <body>
-      <%= yield %>
+  <body class="hold-transition skin-blue sidebar-mini">
+  <div class="wrapper">
+
+    <!-- Main Header -->
+    <header class="main-header">
+
+      <!-- Logo -->
+      <a href="" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><b>W</b></span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b>Wechat</b></span>
+      </a>
+
+      <!-- Header Navbar -->
+      <nav class="navbar navbar-static-top" role="navigation">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+          <span class="sr-only">Toggle navigation</span>
+        </a>
+
+      </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+
+      <!-- sidebar: style can be found in sidebar.less -->
+      <section class="sidebar">
+
+        <!-- Sidebar Menu -->
+        <ul class="sidebar-menu">
+          <li class="header">功能</li>
+          <!-- Optionally, you can add icons to the links -->
+          <li class="<%= 'active' if current_page?(admin_menu_path) %>"><a href="#"><i class="fa fa-link"></i> <span>自定义菜单</span></a></li>
+          <li><a href="#"><i class="fa fa-link"></i> <span>自动回复</span></a></li>
+        </ul>
+        <!-- /.sidebar-menu -->
+      </section>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+      <!-- Main content -->
+      <section class="content">
+        <%= yield %>
+        <!-- Your Page Content Here -->
+
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+      <!-- To the right -->
+      <div class="pull-right hidden-xs">
+        微信公众号管理
+      </div>
+      <!-- Default to the left -->
+      <strong>Copyright &copy; <%= Time.now.year %> <a href="http://intro.domelab.com" target="_blank">Dome</a>.</strong> All rights reserved.
+    </footer>
+  </div>
+
   </body>
 </html>

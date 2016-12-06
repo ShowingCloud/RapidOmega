@@ -41,8 +41,9 @@ GEM
     addressable (2.5.0)
       public_suffix (~> 2.0, >= 2.0.2)
     arel (7.1.4)
-    autoprefixer-rails (6.5.3)
+    autoprefixer-rails (6.5.3.1)
       execjs
+    bcrypt (3.1.11)
     benchmark-ips (2.7.2)
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
@@ -61,11 +62,13 @@ GEM
       rack (>= 1)
       rake (> 10, < 12)
       thor (~> 0.19)
-    domain_name (0.5.20161021)
+    domain_name (0.5.20161129)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     execjs (2.7.0)
     ffi (1.9.14)
+    font-awesome-sass (4.7.0)
+      sass (>= 3.2)
     get_process_mem (0.2.1)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
@@ -96,14 +99,14 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
-    mina (0.3.8)
+    mina (1.0.3)
       open4 (~> 1.3.4)
       rake
-    mina-puma (0.3.2)
-      mina (< 1.0.0)
+    mina-puma (1.0.0)
+      mina (~> 1.0.0)
       puma (>= 2.13)
     mini_portile2 (2.1.0)
-    minitest (5.9.1)
+    minitest (5.10.1)
     nio4r (1.2.1)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
@@ -162,15 +165,12 @@ GEM
     sqlite3 (1.3.12)
     sucker_punch (2.0.2)
       concurrent-ruby (~> 1.0.0)
-    thor (0.19.1)
+    thor (0.19.4)
     thread_safe (0.3.5)
     tilt (2.0.5)
-    turbolinks (5.0.1)
-      turbolinks-source (~> 5)
-    turbolinks-source (5.0.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    uglifier (3.0.3)
+    uglifier (3.0.4)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
@@ -193,9 +193,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt (~> 3.1.7)
   bootstrap-sass
   byebug
   derailed
+  font-awesome-sass (~> 4.7.0)
   jquery-rails
   listen (~> 3.0.5)
   mina-puma
@@ -206,7 +208,6 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   sqlite3
   sucker_punch (~> 2.0)
-  turbolinks (~> 5.x)
   tzinfo-data
   uglifier (>= 1.3.0)
   web-console
