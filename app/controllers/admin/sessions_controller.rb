@@ -11,11 +11,13 @@ class Admin::SessionsController < AdminController
        sign_in admin
        redirect_to admin_menu_path
      else
-       flash.now[:danger] = 'Invalid email/password combination'
+       flash.now[:danger] = '错误的邮箱密码组合'
        render 'new'
      end
    end
 
    def destroy
+     log_out
+     redirect_to admin_sign_in_path
    end
 end

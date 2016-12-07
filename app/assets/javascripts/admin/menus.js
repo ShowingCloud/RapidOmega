@@ -100,6 +100,7 @@ jQuery(document).ready(
         var menuName = $("#menuName");
         var menuType = $("#menuType");
         var menuUrl = $("#menuUrl");
+        var menuMedia = $("#menuMedia");
         menuName.val("");
         menuType.val("");
         menuUrl.val("");
@@ -107,9 +108,9 @@ jQuery(document).ready(
             var _this = $(this);
             target = _this;
             if (_this.parent().parent().hasClass("level1")) {
-                menuType.html('<option value="view">跳转URL</option><option value="">普通按钮</option>');
+                menuType.html('<option value="view">跳转网页链接</option><option value="media_id">下发媒体消息</option><option value="">普通按钮</option>');
             } else {
-                menuType.html('<option value="view">跳转URL</option>');
+                menuType.html('<option value="view">跳转网页链接</option><option value="media_id">下发媒体消息</option>');
             }
             menuName.val($.trim(_this.text()));
             menuType.val(_this.data("type"));
@@ -121,6 +122,17 @@ jQuery(document).ready(
             var add = $(this);
             var ul = add.parent();
             toggleAdd(ul);
+        });
+
+        menuType.on('change', function() {
+            var value = $(this).val();
+            if (value === "view") {
+                menuUrl.parents(".form-group").removeClass("hidden");
+                menuMedia.parents(".form-group").addClass("hidden");
+            } else if (value === "media_id") {
+                menuUrl.parents(".form-group").addClass("hidden");
+                menuMedia.parents(".form-group").removeClass("hidden");
+            }
         });
 
         $("#save").click(function(e) {
@@ -165,8 +177,14 @@ jQuery(document).ready(
                 data: {
                     "menu": buid_menu()
                 }
-            }).done(function(msg) {
-                alert(msg);
+            }).done(function() {
+                alert('发布成功');
+            }).fail(function(response) {
+                if (response.responseJSON.msg) {
+                    alert(response.responseJSON.msg);
+                } else {
+                    alert("错误");
+                }
             });
         });
     }

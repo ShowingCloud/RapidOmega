@@ -1,4 +1,7 @@
 <div class="login-box">
+  <% flash.each do |key, value| %>
+    <%= content_tag :div, value, class: "callout callout-#{key}" %>
+  <% end %>
   <div class="login-box-body">
     <p class="login-box-msg">管理员登录</p>
 
