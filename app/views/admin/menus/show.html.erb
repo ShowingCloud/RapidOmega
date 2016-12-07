@@ -1,8 +1,29 @@
-<!-- <%= @menu %> -->
 <h2>菜单编辑器</h2>
 <p>1、自定义菜单最多包括3个一级菜单，每个一级菜单最多包含5个二级菜单。<br>
 2、一级菜单最多4个汉字，二级菜单最多7个汉字，多出来的部分将会以“...”代替</p>
 <div class="row">
+  <div id="mediaModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">选择图文</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+
+  </div>
+</div>
   <div class="col-md-4">
   <div class="menu-preview">
     <nav class="bottom">
@@ -15,12 +36,12 @@
                 <span class="caret"></span></a>
                 <ul class="dropdown-menu leve2">
                 <% bt["sub_button"].each do |sbt| %>
-                  <li class="item"><a data-type="<%= sbt["type"] if sbt["type"] %>" data-url="<%= sbt["url"] if sbt["url"] %>" ><%= sbt["name"] %></a></li>
+                  <li class="item"><a data-type="<%= sbt["type"] if sbt["type"] %>" data-url="<%= sbt["url"] if sbt["url"] %>" data-media_id="<%= sbt["media_id"] if sbt["media_id"] %>" ><%= sbt["name"] %></a></li>
                 <% end %>
                 </ul>
               </li>
             <% else %>
-              <li class="item"><a data-type="<%= bt["type"] if bt["type"] %>" data-url="<%= bt["url"] if bt["url"] %>" ><%= bt["name"] %></a></li>
+              <li class="item"><a data-type="<%= bt["type"] if bt["type"] %>" data-url="<%= bt["url"] if bt["url"] %>" data-media_id="<%= bt["media_id"] if bt["media_id"] %>" ><%= bt["name"] %></a></li>
               <ul class="dropdown-menu leve2 hidden"></ul>
             <% end %>
           <% end %>
@@ -53,6 +74,7 @@
                   <select class="form-control" id="menuType">
                     <option value="view">跳转网页链接</option>
                     <option value="media_id">下发媒体消息</option>
+                    <option value="">普通按钮</option>
                   </select>
                 </div>
 
@@ -68,6 +90,7 @@
                   <div class="col-sm-9">
                     <a class="btn btn-primary" id="getMediaNews">选择图文</a>
                     <input type="hidden" class="form-control" id="menuMedia">
+                    <div id="selected_media"></div>
                   </div>
                 </div>
               </div>

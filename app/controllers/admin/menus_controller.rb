@@ -5,13 +5,10 @@ class Admin::MenusController < Admin::WechatApiController
 
   def create
     menu = params[:menu]
-    begin
-      raise wechat.menu_create(JSON.parse(menu))
-    rescue => error
-      puts error.inspect
-      render :json => {:msg=> error}, :status => 400
-    else
+    if wechat.menu_create(JSON.parse(menu))
       head :ok
+    else
+      head :bad_request
     end
   end
 end

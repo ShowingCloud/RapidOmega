@@ -35,6 +35,7 @@ jQuery(document).ready(
                 var name_lv1 = $.trim(a_tag.text());
                 var type_lv1 = a_tag.data('type');
                 var url_lv1 = a_tag.data('url');
+                var media_id_lv1 = a_tag.data('media_id');
                 if (valid(name_lv1)) {
                     item.name = name_lv1;
                 }
@@ -42,8 +43,12 @@ jQuery(document).ready(
                     item.type = type_lv1;
                 }
 
-                if (valid(url_lv1)) {
+                if (type_lv1 === "view" && valid(url_lv1)) {
                     item.url = url_lv1;
+                }
+
+                if (type_lv1 === "media_id" && valid(type_lv1)) {
+                    item.media_id = media_id_lv1;
                 }
 
                 var sub_button = [];
@@ -56,6 +61,7 @@ jQuery(document).ready(
                         var name_lv2 = $.trim(a_tag.text());
                         var type_lv2 = a_tag.data('type');
                         var url_lv2 = a_tag.data('url');
+                        var media_id_lv2 = a_tag.data('media_id');
                         if (valid(name_lv2)) {
                             item_lv2.name = name_lv2;
                         }
@@ -63,8 +69,12 @@ jQuery(document).ready(
                             item_lv2.type = type_lv2;
                         }
 
-                        if (valid(url_lv2)) {
+                        if (type_lv2 === "view" && valid(url_lv2)) {
                             item_lv2.url = url_lv2;
+                        }
+
+                        if (type_lv2 === "media_id" && valid(type_lv2)) {
+                            item_lv2.media_id = media_id_lv2;
                         }
                         sub_button.push(item_lv2);
 
@@ -107,14 +117,21 @@ jQuery(document).ready(
         $(".menu-preview").on('click', 'a', function() {
             var _this = $(this);
             target = _this;
-            if (_this.parent().parent().hasClass("level1")) {
-                menuType.html('<option value="view">跳转网页链接</option><option value="media_id">下发媒体消息</option><option value="">普通按钮</option>');
-            } else {
-                menuType.html('<option value="view">跳转网页链接</option><option value="media_id">下发媒体消息</option>');
-            }
             menuName.val($.trim(_this.text()));
             menuType.val(_this.data("type"));
             menuUrl.val(_this.data("url"));
+            if (_this.parent().parent().hasClass("level1")) {
+                $("#menuType option[value='']").removeAttr('disabled');
+            } else {
+                $("#menuType option[value='']").attr('disabled', 'disabled');
+            }
+        });
+
+        $('#mediaModal').on('click', '.articals', function() {
+            var media_id = $(this).data('media_id');
+            $('#menuMedia').val(media_id);
+            $('#selected_media').empty().append($(this).removeClass('col-sm-4'));
+            $('#mediaModal').modal('hide');
         });
 
         $(".menu-preview").on('click', '.add', function() {
@@ -124,14 +141,45 @@ jQuery(document).ready(
             toggleAdd(ul);
         });
 
+        $("#getMediaNews").on('click', function() {
+            $.ajax({
+                url: "/admin/materials",
+                dataType: "json"
+            }).done(function(response) {
+                console.log(response);
+                $('#mediaModal').modal();
+                $('#mediaModal .modal-body .row').empty();
+                if (response.item.length) {
+                    response.item.forEach(function(ele) {
+                        var col = $('<div class="col-sm-4 articals"></div>');
+                        var articals = $('<ul class="media-content"></ul>');
+                        col.data('media_id', ele.media_id);
+                        ele.content.news_item.forEach(function(content) {
+                            var li = $('<li><h5>' + content.title + '</h5></li>');
+                            articals.append(li);
+                        });
+                        col.append(articals);
+                        $('#mediaModal .modal-body .row').append(col);
+
+                    });
+                }
+            }).fail(function() {
+                alert("获取素材列表失败");
+            });
+        });
+
         menuType.on('change', function() {
             var value = $(this).val();
+            console.log(value);
             if (value === "view") {
                 menuUrl.parents(".form-group").removeClass("hidden");
                 menuMedia.parents(".form-group").addClass("hidden");
             } else if (value === "media_id") {
                 menuUrl.parents(".form-group").addClass("hidden");
                 menuMedia.parents(".form-group").removeClass("hidden");
+            } else {
+                menuUrl.parents(".form-group").addClass("hidden");
+                menuMedia.parents(".form-group").addClass("hidden");
             }
         });
 
@@ -139,12 +187,16 @@ jQuery(document).ready(
             var name = menuName.val();
             var type = menuType.val();
             var url = menuUrl.val();
+            var media_id = menuMedia.val();
             if (name && name !== "") {
                 target.text(name);
             }
 
             if (type === "view" && url && url !== "") {
                 target.data("url", url);
+            }
+            if (type === "media_id" && media_id) {
+                target.data("media_id", media_id);
             }
             if (target.data("type") !== type) {
                 target.data("type", type);
