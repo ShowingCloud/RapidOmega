@@ -1,0 +1,2 @@
+module Admin::ResponseRulesHelper
+end

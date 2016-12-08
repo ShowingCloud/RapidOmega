@@ -3,8 +3,14 @@ class WechatsController < ApplicationController
   wechat_responder
 
   on :text do |request, content|
-    wechat.custom_message_send Wechat::Message.to(request[:FromUserName]).image("mThew_r0IKT-4KXb9f6jZMePKX8lbskUUriyW1OjrzE")
-    request.reply.text "感谢您关注豆姆Lab，您的留言我们已经收到，将尽快回复！您也可以添加客服微信号dome_lab，或者扫描下方二维码，方便沟通~"
+    @rule = Rule.find_by_case("text")
+    @responses = @rule.responses
+    if @responses.length
+      @responses.each do |r|
+        wechat.custom_message_send Wechat::Message.to(request[:FromUserName]).send r.msgtype,(r.message)
+      end
+    end
+    request.reply.success
   end
 
   on :event, with: 'unsubscribe' do |request|
