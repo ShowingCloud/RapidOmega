@@ -10,14 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161206090306) do
+ActiveRecord::Schema.define(version: 20161208023358) do
 
   create_table "admins", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "password_digest"
+    t.string   "name",            null: false
+    t.string   "email",           null: false
+    t.string   "password_digest", null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.index ["email"], name: "index_admins_on_email", unique: true
+    t.index ["name"], name: "index_admins_on_name", unique: true
+  end
+
+  create_table "response_rules", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "rule_id"
+    t.integer  "response_id"
+  end
+
+  create_table "responses", force: :cascade do |t|
+    t.string   "msgtype"
+    t.string   "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "rules", force: :cascade do |t|
+    t.string   "case",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["case"], name: "index_rules_on_case", unique: true
   end
 
 end
