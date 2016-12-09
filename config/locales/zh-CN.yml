@@ -19,5 +19,11 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 
-en:
-  hello: "Hello world"
+zh-CN:
+  msgtype:
+    text: "文字"
+    mpnews: "图文"
+    image: "图片"
+    music: "音乐"
+    voice: "语音"
+    video: "视频"

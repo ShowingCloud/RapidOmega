@@ -48,8 +48,18 @@
         <ul class="sidebar-menu">
           <li class="header">功能</li>
           <!-- Optionally, you can add icons to the links -->
-          <li class="<%= 'active' if current_page?(admin_menu_path) %>"><a href="#"><i class="fa fa-circle-o"></i> <span>自定义菜单</span></a></li>
-          <li><a href="#"><i class="fa fa-circle-o"></i> <span>自动回复</span></a></li>
+          <li class="<%= 'active' if current_page?(admin_menu_path) %>"><a href="<%= edit_admin_menu_path %>"><i class="fa fa-circle-o"></i> <span>自定义菜单</span></a></li>
+          <li class="treeview active">
+            <a href="#"><i class="fa fa-circle-o"></i> <span>自动回复</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="<%= admin_response_rules_path %>">自动回复规则</a></li>
+              <li><a href="<%= admin_responses_path %>">自动回复内容</a></li>
+            </ul>
+          </li>
         </ul>
         <!-- /.sidebar-menu -->
       </section>

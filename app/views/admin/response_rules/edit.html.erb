@@ -1,6 +1,6 @@
-<h2>新建规则类型</h2>
+<h2>编辑回复规则</h2>
 
-<%= form_for(@response_rule,url: admin_response_rules_path) do |f| %>
+<%= form_for(@response_rule,url: admin_response_rule_path(@response_rule)) do |f| %>
   <% if @response_rule.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@response_rule.errors.count, "error") %> prohibited this admin_response_rule from being saved:</h2>

@@ -1,6 +1,6 @@
-<h2>新建自动回复</h2>
+<h2>编辑自动回复</h2>
 
-<%= form_for(@response,url: admin_responses_path) do |f| %>
+<%= form_for(@response,url: admin_response_path(@response)) do |f| %>
   <% if @response.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@response.errors.count, "error") %> prohibited this admin_response from being saved:</h2>

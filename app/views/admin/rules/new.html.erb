@@ -1,0 +1,22 @@
+<h2>新建规则类型</h2>
+
+<%= form_for(@rule,url: admin_rules_path) do |f| %>
+  <% if @rule.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@rule.errors.count, "error") %> prohibited this admin_rule from being saved:</h2>
+
+      <ul>
+      <% @rule.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    规则：<%= f.text_field :case %><br>
+    <%= f.submit "提交" %>
+  </div>
+<% end %>
+
+<%= link_to '返回', admin_rules_path %>

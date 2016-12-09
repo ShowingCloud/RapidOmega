@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+<table class="table">
+  <thead>
+    <tr>
+      <th>规则类型</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rules.each do |rule| %>
+      <tr>
+        <td><%= rule.case %></td>
+        <td><%= link_to '编辑', edit_admin_rule_path(rule) %></td>
+        <td><%= link_to '删除', admin_rule_path(rule), method: :delete, data: { confirm: '确定删除?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to '新建', new_admin_rule_path %>

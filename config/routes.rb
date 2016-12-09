@@ -1,13 +1,20 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    resources :rules
+  end
   resource :wechat, only: [:show, :create]
   namespace :admin do
-    resource :menu, only:[:show, :create]
-    resource :response
-    resource :rule
-    resource :response_rule
+    resource :menu, only:[:edit, :create]
+    resources :responses
+    resources :rules do
+      resources :responses
+    end
+    resources :response_rules
     get 'sign_in', to: 'sessions#new'
     post 'sign_in', to: 'sessions#create'
     delete 'sign_out', to: 'sessions#destroy'
     get 'materials',to: 'materials#index'
   end
+
+  root 'sessions#new'
 end

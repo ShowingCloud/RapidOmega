@@ -10,14 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161208023358) do
+ActiveRecord::Schema.define(version: 20161209033415) do
 
   create_table "admins", force: :cascade do |t|
-    t.string   "name",            null: false
-    t.string   "email",           null: false
-    t.string   "password_digest", null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "name",                        null: false
+    t.string   "email",                       null: false
+    t.string   "password_digest",             null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "role",            default: 0
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["name"], name: "index_admins_on_name", unique: true
   end
@@ -30,7 +31,7 @@ ActiveRecord::Schema.define(version: 20161208023358) do
   end
 
   create_table "responses", force: :cascade do |t|
-    t.string   "msgtype"
+    t.integer  "msgtype",    null: false
     t.string   "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
