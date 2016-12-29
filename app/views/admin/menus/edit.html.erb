@@ -2,32 +2,10 @@
 <p>1、自定义菜单最多包括3个一级菜单，每个一级菜单最多包含5个二级菜单。<br>
 2、一级菜单最多4个汉字，二级菜单最多7个汉字，多出来的部分将会以“...”代替</p>
 <div class="row">
-  <div id="mediaModal" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">选择图文</h4>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-          <div class="row">
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-      </div>
-    </div>
-
-  </div>
-</div>
+  <%= render "admin/shared/media_modal" %>
   <div class="col-md-4">
   <div class="menu-preview">
     <nav class="bottom">
-      <div class="container-fluid">
         <ul class="nav navbar-nav level1">
           <% @menu["menu"]["button"].each do |bt| %>
             <% if bt["sub_button"].length > 0 %>
@@ -46,7 +24,7 @@
             <% end %>
           <% end %>
         </ul>
-      </div>
+
     </nav>
   </div>
 </div>

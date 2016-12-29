@@ -9,6 +9,9 @@
   </head>
 
   <body class="hold-transition skin-blue sidebar-mini">
+   <div class="hidden" id="loading">
+     <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+   </div>
   <div class="wrapper">
 
     <!-- Main Header -->
@@ -31,8 +34,20 @@
 
         <div class="navbar-custom-menu">
           <ul class="nav navbar-nav">
-            <li><a><%= current_admin.name %></a></li>
-            <li><%= link_to "注销", admin_sign_out_path, method: :delete %></li>
+            <li class="dropdown">
+            <!-- Menu Toggle Button -->
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <span class="hidden-xs"><%= current_admin.name %></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                  <a href="#" class="btn btn-default btn-flat">更改密码</a>
+                </li>
+                <li>
+                  <%= link_to "注销", admin_sign_out_path, class:"btn btn-default btn-flat",method: :delete %>
+                </li>
+            </ul>
+          </li>
           </ul>
         </div>
 
@@ -58,6 +73,9 @@
             <ul class="treeview-menu">
               <li><a href="<%= admin_response_rules_path %>">自动回复规则</a></li>
               <li><a href="<%= admin_responses_path %>">自动回复内容</a></li>
+              <% super_admins_only do %>
+                <li><a href="<%= admin_rules_path %>">自动回复触发</a></li>
+              <% end %>
             </ul>
           </li>
         </ul>

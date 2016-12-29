@@ -1,4 +1,4 @@
-<h2>新建规则类型</h2>
+<h2>新建触发</h2>
 
 <%= form_for(@rule,url: admin_rules_path) do |f| %>
   <% if @rule.errors.any? %>
@@ -14,7 +14,8 @@
   <% end %>
 
   <div class="actions">
-    规则：<%= f.text_field :case %><br>
+    名称：<%= f.text_field :name %><br>
+    触发：<%= f.text_field :case %><br>
     <%= f.submit "提交" %>
   </div>
 <% end %>

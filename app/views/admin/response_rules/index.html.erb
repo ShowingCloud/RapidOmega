@@ -2,7 +2,8 @@
 <table class="table">
   <thead>
     <tr>
-      <th>规则类型</th>
+      <th>回复规则</th>
+      <th>回复类型</th>
       <th>回复内容</th>
       <th colspan="2"></th>
     </tr>
@@ -11,8 +12,9 @@
   <tbody>
     <% @response_rules.each do |rr| %>
       <tr>
-        <td><%= rr.rule.case %></td>
-        <td><%= rr.response.msgtype + rr.response.message %></td>
+        <td><%= rr.rule.name %></td>
+        <td><%= I18n.t("msgtype.#{rr.response.msgtype}") %></td>
+        <td><%= rr.response.message %></td>
         <td><%= link_to '编辑', edit_admin_response_rule_path(rr) %></td>
         <td><%= link_to '删除', admin_response_rule_path(rr), method: :delete, data: { confirm: '确定删除?' } %></td>
       </tr>

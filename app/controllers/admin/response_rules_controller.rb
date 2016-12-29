@@ -8,7 +8,7 @@ class Admin::ResponseRulesController < AdminController
 
   # GET /admin/response_rules
   def index
-    @response_rules = ResponseRule.all.order(:rule_id)
+    @response_rules = ResponseRule.all.order(:rule_id).includes(:rule,:response)
   end
 
   # GET /admin/response_rules/1

@@ -13,7 +13,8 @@ Rails.application.routes.draw do
     get 'sign_in', to: 'sessions#new'
     post 'sign_in', to: 'sessions#create'
     delete 'sign_out', to: 'sessions#destroy'
-    get 'materials',to: 'materials#index'
+    # get 'materials',to: 'materials#index'
+    resources :materials
   end
 
   root 'sessions#new'

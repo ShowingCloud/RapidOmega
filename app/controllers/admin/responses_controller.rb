@@ -5,8 +5,14 @@ class Admin::ResponsesController < AdminController
   def index
     if params[:rule_id]
       @responses = Rule.find(params[:rule_id]).responses
+    elsif params[:msgtype]
+      @responses = Response.where(msgtype:params[:msgtype])
     else
       @responses = Response.all
+    end
+    respond_to do |format|
+      format.html
+      format.json { render :json => @responses }
     end
   end
 
@@ -37,7 +43,7 @@ class Admin::ResponsesController < AdminController
   # PATCH/PUT /admin/responses/1
   def update
     if @response.update(response_params)
-      redirect_to @response, notice: '自动回复更新成功'
+      redirect_to admin_responses_path, notice: '自动回复更新成功'
     else
       render :edit
     end

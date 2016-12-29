@@ -118,7 +118,7 @@ jQuery(document).ready(
             var _this = $(this);
             target = _this;
             menuName.val($.trim(_this.text()));
-            menuType.val(_this.data("type"));
+            menuType.val(_this.data("type")).change();
             menuUrl.val(_this.data("url"));
             if (_this.parent().parent().hasClass("level1")) {
                 $("#menuType option[value='']").removeAttr('disabled');
@@ -127,12 +127,12 @@ jQuery(document).ready(
             }
         });
 
-        $('#mediaModal').on('click', '.articals', function() {
-            var media_id = $(this).data('media_id');
-            $('#menuMedia').val(media_id);
-            $('#selected_media').empty().append($(this).removeClass('col-sm-4'));
-            $('#mediaModal').modal('hide');
-        });
+        // $('#mediaModal').on('click', '.articals', function() {
+        //     var media_id = $(this).data('media_id');
+        //     $('#menuMedia').val(media_id);
+        //     $('#selected_media').empty().append($(this).removeClass('col-sm-4'));
+        //     $('#mediaModal').modal('hide');
+        // });
 
         $(".menu-preview").on('click', '.add', function() {
             $(this).after("<li class='item'><a>请编辑</a></li>");
@@ -140,32 +140,12 @@ jQuery(document).ready(
             var ul = add.parent();
             toggleAdd(ul);
         });
-
-        $("#getMediaNews").on('click', function() {
-            $.ajax({
-                url: "/admin/materials",
-                dataType: "json"
-            }).done(function(response) {
-                console.log(response);
-                $('#mediaModal').modal();
-                $('#mediaModal .modal-body .row').empty();
-                if (response.item.length) {
-                    response.item.forEach(function(ele) {
-                        var col = $('<div class="col-sm-4 articals"></div>');
-                        var articals = $('<ul class="media-content"></ul>');
-                        col.data('media_id', ele.media_id);
-                        ele.content.news_item.forEach(function(content) {
-                            var li = $('<li><h5>' + content.title + '</h5></li>');
-                            articals.append(li);
-                        });
-                        col.append(articals);
-                        $('#mediaModal .modal-body .row').append(col);
-
-                    });
-                }
-            }).fail(function() {
-                alert("获取素材列表失败");
-            });
+        
+        media_picker.init("#getMediaNews",{type:"news"},function(target){
+            var media_id = $(target).data('media_id');
+            $('#menuMedia').val(media_id);
+            $('#selected_media').empty().append($(target).removeClass('col-sm-4'));
+            $('#mediaModal').modal('hide');
         });
 
         menuType.on('change', function() {

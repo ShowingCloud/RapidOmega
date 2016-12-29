@@ -1,0 +1,5 @@
+  <ul class="nav nav-tabs">
+    <% @rules.each_with_index do |rule,index| %>
+        <li <%= class="active" if index == 0 %>><a data-toggle="tab" href="<%= rule.id %> "><%= rule.name %></a></li>
+    <% end %>
+  </ul>

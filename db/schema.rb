@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161209033415) do
+ActiveRecord::Schema.define(version: 20161228082429) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "admins", force: :cascade do |t|
     t.string   "name",                        null: false
@@ -19,8 +22,20 @@ ActiveRecord::Schema.define(version: 20161209033415) do
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.integer  "role",            default: 0
-    t.index ["email"], name: "index_admins_on_email", unique: true
-    t.index ["name"], name: "index_admins_on_name", unique: true
+    t.index ["email"], name: "index_admins_on_email", unique: true, using: :btree
+    t.index ["name"], name: "index_admins_on_name", unique: true, using: :btree
+  end
+
+  create_table "media", force: :cascade do |t|
+    t.string   "media_id"
+    t.json     "content"
+    t.string   "name"
+    t.string   "url"
+    t.integer  "update_time"
+    t.integer  "media_type"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["media_id"], name: "index_media_on_media_id", unique: true, using: :btree
   end
 
   create_table "response_rules", force: :cascade do |t|
@@ -41,7 +56,8 @@ ActiveRecord::Schema.define(version: 20161209033415) do
     t.string   "case",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["case"], name: "index_rules_on_case", unique: true
+    t.string   "name",       null: false
+    t.index ["case"], name: "index_rules_on_case", unique: true, using: :btree
   end
 
 end

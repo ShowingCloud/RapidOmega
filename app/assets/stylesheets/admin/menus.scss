@@ -2,8 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .menu-preview{
-  border: #000;
-  width:320px;
   height: 400px;
   background-color: #FFF;
   border: 1px solid #000;
@@ -21,6 +19,7 @@
   .add{
     text-align: center;
   }
+  
 }
 
 .menu-editor{

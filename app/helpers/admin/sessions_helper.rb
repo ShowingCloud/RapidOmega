@@ -15,11 +15,15 @@ module Admin::SessionsHelper
   end
 
   def require_super_admin
-    flash[:notice] = "需要超级管理员" && redirect_back(fallback_location: root_path) unless current_admin.superadmin?
+    flash[:notice] = "需要超级管理员权限" && redirect_back(fallback_location: root_path) unless current_admin.superadmin?
   end
 
   def log_out
     session.delete(:user_id)
     @current_user = nil
+  end
+  
+  def super_admins_only(&block)
+    block.call if current_admin.try(:superadmin?)
   end
 end

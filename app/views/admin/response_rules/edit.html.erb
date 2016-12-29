@@ -14,8 +14,9 @@
   <% end %>
 
   <div class="actions">
-    规则：<%= f.select :rule_id, Rule.all.map {|rule| [rule.case,rule.id]} %><br>
-    回复：<%= f.select :response_id, Response.all.map {|response| [response.message,response.id]} %><br>
+    规则：<%= f.select :rule_id, Rule.all.map {|rule| [rule.name,rule.id]} %><br>
+    回复：<%= select("response","msgtype", Response.msgtypes.keys.collect {|msgtype| [I18n.t("msgtype.#{msgtype}"),msgtype]},{include_blank: '选择类型'}) %>
+          <%= f.select :response_id,[],{prompt: '选择内容'} %><br>
     <%= f.submit "提交" %>
   </div>
 <% end %>

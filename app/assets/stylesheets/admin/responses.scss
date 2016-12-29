@@ -1,3 +1,17 @@
 // Place all the styles related to the admin/responses controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.response_media_wrapper{
+    ul{
+        padding: 10px;
+    }
+    img{
+        max-height:100px;
+    }
+}
+
+#responses_table{
+    td{
+        max-width: 500px;
+    }
+}

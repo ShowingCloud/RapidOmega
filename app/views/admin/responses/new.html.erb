@@ -15,9 +15,13 @@
 
   <div class="actions">
     类型：<%= f.select(:msgtype, Response.msgtypes.keys.map {|msgtype| [I18n.t("msgtype.#{msgtype}"),msgtype]}) %><br>
-    内容：<%= f.text_field :message %><br>
+    内容：<%= f.text_area :message,size:'50x5' %>
+    <div class="preview"></div>
     <%= f.submit "提交" %>
   </div>
 <% end %>
 
 <%= link_to '返回', admin_responses_path %>
+
+<%= render "admin/shared/media_modal" %>
+
