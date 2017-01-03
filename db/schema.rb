@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20161228082429) do
 
   create_table "media", force: :cascade do |t|
     t.string   "media_id"
-    t.json     "content"
+    t.jsonb    "content"
     t.string   "name"
     t.string   "url"
     t.integer  "update_time"
