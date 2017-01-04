@@ -1,6 +1,6 @@
 Wechat::Message.class_eval do
   def mpnews(media_id)
-    update(MsgType: 'mpnews', mpnews: { MediaId: media_id })
+    update(MsgType: 'mpnews', mpnews: { media_id: media_id })
   end
 end
 
