@@ -7,7 +7,7 @@ var loading={
     off:function(){
         $("#loading").addClass("hidden");
     }
-}
+};
 var media_picker={
     init:function(selector,query_option,callback){
         query_option.type = query_option.type || "news";
@@ -18,8 +18,11 @@ var media_picker={
             media_picker.fetch(_query_option,callback);
         });
     },
-    fetch:function(query_option,callback){
+    fetch:function(query_option,callback,page_num){
         loading.on();
+        if(page_num){
+          query_option.offset = query_option.count*(page_num -1);
+        }
         console.log("query_option:"+JSON.stringify(query_option));
         var trans={"news":"图文","image":"图片","video":"视频","voice":"语音"};
         $.ajax({
@@ -28,13 +31,11 @@ var media_picker={
                 dataType: "json"
             }).done(function(response) {
                 loading.off();
-                console.log(response);
                 $('#mediaModal').modal();
                 $('#mediaModal .modal-body .row').empty();
                 if (response.item.length) {
                     $('#mediaModal .modal-title').text("选择"+trans[query_option.type]+"("+response.total_count+")");
                     response.item.forEach(function(ele) {
-                        console.log(JSON.stringify(ele));
                         var col = $('<div class="col-sm-4 item"></div>');
                         col.data('media_id', ele.media_id);
                         if(query_option.type==="news"){
@@ -42,25 +43,25 @@ var media_picker={
                             ele.content.news_item.forEach(function(c) {
                                 var li= $('<li><h5>' + c.title + '</h5></li>');
                                 ul.append(li);
-                            }); 
+                            });
                             col.append(ul);
                         }
-                        
+
                         if(query_option.type==="image"){
                             var image_wrapper = $('<div class="media-content"></div>');
                             var image = $('<img style="width:100%">');
                             image.attr("src",ele.url);
-                            image_wrapper.append(image)
+                            image_wrapper.append(image);
                             col.append(image_wrapper);
                         }
 
                         $('#mediaModal .modal-body .row').append(col);
                     });
-                    query_option.offset=parseInt(query_option.offset) + parseInt(query_option.count);
-                    var page_num = Math.ceil(query_option.offset/ query_option.count);
-                    console.log(page_num);
+                    // query_option.offset=parseInt(query_option.offset) + parseInt(query_option.count);
+                    // var page_num = Math.ceil(query_option.offset/ query_option.count);
+                    // console.log(page_num);
                     jspager.init(query_option.count,response.total_count,$("#mediaModal .modal-footer"),page_num,function(page){
-                        media_picker.fetch(query_option,callback);
+                        media_picker.fetch(query_option,callback,page);
                     });
                 }
                 $('#mediaModal .item').on('click',function(){
@@ -80,6 +81,7 @@ var jspager = {
             page_count = Math.ceil(total_count / page_size);
             console.log("page_count:" + page_count);
             var current_page = page_num || 1;
+            console.log("current_page:"+current_page);
             var prev_page = $('<li><a href="#" data-page="' + (parseInt(current_page) - 1) + '">上一页</a></li>');
             var next_page = $('<li><a href="#" data-page="' + (parseInt(current_page) + 1) + '">下一页</a></li>');
             var pager = $('<ul class="pager"></ul>');
@@ -103,14 +105,15 @@ var jspager = {
             $(".pager a").click(function(e) {
                 e.preventDefault();
                 var target_page = $(this).data("page");
+                console.log(target_page);
                 callback(target_page);
             });
-    
+
             $('.pager select').on('change', function() {
                 var target_page = $(this).val();
                 callback(target_page);
             });
     }
 }
-    
+
 };

@@ -64,7 +64,7 @@
         <ul class="sidebar-menu">
           <li class="header">功能</li>
           <!-- Optionally, you can add icons to the links -->
-          <li class="<%= 'active' if current_page?(admin_menu_path) %>"><a href="<%= edit_admin_menu_path %>"><i class="fa fa-circle-o"></i> <span>自定义菜单</span></a></li>
+          <li class="<%= 'active' if current_page?(admin_menu_path) %>"><a href="<%= admin_menu_path %>"><i class="fa fa-circle-o"></i> <span>自定义菜单</span></a></li>
           <li class="treeview <%= 'active' if controller_name.include?("response") || controller_name.include?("rule") %>">
             <a href="#"><i class="fa fa-circle-o"></i> <span>自动回复</span>
               <span class="pull-right-container">

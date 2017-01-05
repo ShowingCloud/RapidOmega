@@ -14,7 +14,7 @@
       <tr>
         <td><%= rr.rule.name %></td>
         <td><%= I18n.t("msgtype.#{rr.response.msgtype}") %></td>
-        <td><%= rr.response.message %></td>
+        <td class="response_content" data-media_id="<%= rr.response.message %>" data-msgtype="<%= rr.response.msgtype %>"></td>
         <td><%= link_to '编辑', edit_admin_response_rule_path(rr) %></td>
         <td><%= link_to '删除', admin_response_rule_path(rr), method: :delete, data: { confirm: '确定删除?' } %></td>
       </tr>

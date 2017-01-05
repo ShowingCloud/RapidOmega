@@ -3,6 +3,7 @@
 jQuery(document).ready(function(){
     $(".new_response_rule #response_msgtype").on("change",function(){
         var msgtype = $(this).val();
+        var response = $("#response_rule_response_id");
         if(msgtype){
             $.ajax({
                 url:"/admin/responses",
@@ -11,12 +12,11 @@ jQuery(document).ready(function(){
             }).done(function(data){
                 console.log(data);
                 if (data.length){
-                    var response = $("#response_rule_response_id");
                     response.empty();
                     data.forEach(function(d){
                         response.append("<option value='"+d.id+"'>"+d.message+"</option>");
                     });
-                    
+
                 }
             });
         }

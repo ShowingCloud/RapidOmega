@@ -1,7 +1,7 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 jQuery(document).ready(function(){
-    
+
     $(".response_content,.preview").each(function(){
     	var _this = $(this);
     	var media_id = _this.data("media_id");
@@ -22,7 +22,7 @@ jQuery(document).ready(function(){
     			    });
     			    media_wrapper.append(ul);
     			}else if(msgtype==="image"){
-    			   var image = "<img src='"+ response.url +"'>"
+    			   var image = "<img src='"+ response.url +"'>";
     			   media_wrapper.append(image);
     			}
     			media_wrapper.appendTo(_this);
@@ -32,7 +32,7 @@ jQuery(document).ready(function(){
     		}
         });
     });
-    
+
     $(".new_response #response_msgtype,.edit_response #response_msgtype").change(function(){
         var msgtype = $(this).val();
         var input= $("#response_message");

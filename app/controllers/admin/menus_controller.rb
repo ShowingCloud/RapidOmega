@@ -1,5 +1,5 @@
 class Admin::MenusController < Admin::WechatApiController
-  def edit
+  def show
     @menu = wechat.menu
   end
 
