@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resource :wechat, only: [:show, :create]
   namespace :admin do
+    get '/test/custom_msg', to: 'test#custom_msg'
     resource :menu, only:[:edit, :create]
     resources :responses
     resources :rules do
