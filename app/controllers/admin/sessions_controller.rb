@@ -9,7 +9,7 @@ class Admin::SessionsController < AdminController
      admin = Admin.find_by(email: params[:session][:email].downcase)
      if admin && admin.authenticate(params[:session][:password])
        sign_in admin
-       redirect_to admin_root
+       redirect_to admin_root_path
      else
        flash.now[:danger] = '错误的邮箱密码组合'
        render 'new'
