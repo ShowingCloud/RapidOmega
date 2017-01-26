@@ -29,9 +29,15 @@ class WechatsController < ApplicationController
       @rule
       Rule.where(:event => "text").where.not(:keyword => nil).each do |rule|
         if rule.fullmatch
-          @rule = rule && break  if rule.keyword == content && rule.responses.present?
+            if rule.keyword == content && rule.responses.present?
+              @rule = rule
+              break
+            end
         else
-          @rule = rule && break if content.include? rule.keyword && rule.responses.present?
+           if content.include? rule.keyword && rule.responses.present?
+             @rule = rule
+             break
+           end
         end
       end
       @rule = Rule.find_by(:event => 'text',:keyword => nil) unless @rule.present?
