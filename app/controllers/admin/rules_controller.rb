@@ -34,7 +34,7 @@ class Admin::RulesController < AdminController
   # PATCH/PUT /admin/rules/1
   def update
     if @rule.update(rule_params)
-      redirect_to admin_roles_path, notice: '规则类型更新成功'
+      redirect_to admin_rules_path, notice: '规则类型更新成功'
     else
       render :edit
     end
@@ -54,7 +54,7 @@ class Admin::RulesController < AdminController
 
     # Only allow a trusted parameter "white list" through.
     def rule_params
-      params.require(:rule).permit(:case,:name)
+      params.require(:rule).permit(:event,:name)
     end
 
 end

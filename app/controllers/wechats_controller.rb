@@ -24,9 +24,21 @@ class WechatsController < ApplicationController
 
   on :fallback, respond: ''
 
-  def auto_response(event,request)
-    @rule = Rule.find_by_case(event)
-    request.reply.success && return unless @rule
+  def auto_response(event,request,content = nil)
+    if event == 'text'
+      @rule
+      Rule.where(:event => "text").where.not(:keyword => nil).includes(:responses).where(:responses_count => 1).each do |rule|
+        if rule.fullmatch
+          @rule = rule && break  if rule.keyword == content
+        else
+          @rule = rule && break if content.include? rule.keyword
+        end
+      end
+      @rule = Rule.find_by(:event => 'text',:keyword => nil) unless @rule.present?
+    else
+      @rule = Rule.find_by_event(event)
+    end
+    request.reply.success && return unless @rule.present?
     @responses = @rule.responses
     if @responses.length
       @responses.each do |r|

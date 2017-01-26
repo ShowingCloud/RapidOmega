@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161228082429) do
+ActiveRecord::Schema.define(version: 20170126012421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,11 +53,13 @@ ActiveRecord::Schema.define(version: 20161228082429) do
   end
 
   create_table "rules", force: :cascade do |t|
-    t.string   "case",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string   "name",       null: false
-    t.index ["case"], name: "index_rules_on_case", unique: true, using: :btree
+    t.string   "event",                     null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "name",                      null: false
+    t.string   "keyword"
+    t.boolean  "fullmatch",  default: true
+    t.index ["event", "keyword"], name: "index_rules_on_event_and_keyword", unique: true, using: :btree
   end
 
 end

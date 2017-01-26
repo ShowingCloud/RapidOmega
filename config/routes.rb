@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resource :menu, only:[:show, :create]
     resources :responses
+    resources :keyword_rules
     resources :rules do
       resources :responses
     end

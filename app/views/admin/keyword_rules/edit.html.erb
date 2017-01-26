@@ -1,6 +1,6 @@
-<h2>新建触发</h2>
+<h2>编辑触发</h2>
 
-<%= form_for(@rule,url: admin_rules_path) do |f| %>
+<%= form_for(@rule,url: admin_keyword_rule_path(@rule)) do |f| %>
   <% if @rule.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@rule.errors.count, "error") %> prohibited this admin_rule from being saved:</h2>
@@ -15,9 +15,10 @@
 
   <div class="actions">
     名称：<%= f.text_field :name %><br>
-    触发：<%= f.text_field :event %><br>
+    规则：<%= f.text_field :keyword %><br>
+    完全匹配：<%= f.check_box :fullmatch %><br>
     <%= f.submit "提交" %>
   </div>
 <% end %>
 
-<%= link_to '返回', admin_rules_path %>
+<%= link_to '返回', admin_keyword_rules_path %>
