@@ -3,7 +3,7 @@ class WechatsController < ApplicationController
   wechat_responder
 
   on :text do |request, content|
-    auto_response('text',request)
+    auto_response('text',request,content)
   end
 
   on :image do |request|
