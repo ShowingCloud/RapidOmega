@@ -27,11 +27,11 @@ class WechatsController < ApplicationController
   def auto_response(event,request,content = nil)
     if event == 'text'
       @rule
-      Rule.where(:event => "text").where.not(:keyword => nil).includes(:responses).where(:responses_count => 1).each do |rule|
+      Rule.where(:event => "text").where.not(:keyword => nil).each do |rule|
         if rule.fullmatch
-          @rule = rule && break  if rule.keyword == content
+          @rule = rule && break  if rule.keyword == content && rule.responses.present?
         else
-          @rule = rule && break if content.include? rule.keyword
+          @rule = rule && break if content.include? rule.keyword && rule.responses.present?
         end
       end
       @rule = Rule.find_by(:event => 'text',:keyword => nil) unless @rule.present?
